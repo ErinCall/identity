@@ -133,7 +133,6 @@ def allow():
         raise BadRequestKeyError(e.message)
     openid_request = oidserver.decodeRequest(last_query)
     if 'yes' in request.form:
-        user = g.user
         if request.form.get('remember', 'no') == 'yes':
             trust_root = openid_request.trust_root
             session['approved'][trust_root] = 'always'
@@ -141,7 +140,7 @@ def allow():
         response = openid_request.answer(True, identity=base_url + 'id')
         sreg_request = sreg.SRegRequest.fromOpenIDRequest(openid_request)
         sreg_data = {
-            'nickname': user,
+            'name': config['name'],
         }
 
         sreg_response = sreg.SRegResponse.extractResponse(
