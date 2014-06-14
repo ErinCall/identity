@@ -1,0 +1,13 @@
+{% extends 'layout.html.jinja' %}
+{%block content%}
+    <div>
+        <p>Do you want to allow this site?</p>
+        <form action="/allow" method="POST">
+            <p>Trust Root: {{trust_root}}</p>
+            <input type="checkbox" id="remember" name="remember" value="yes">
+            <label for="remember">Remember this site</label>
+            <input type="submit" name="yes" value="yes">
+            <input type="submit" name="no" value="no">
+        </form>
+    </div>
+{%endblock content%}

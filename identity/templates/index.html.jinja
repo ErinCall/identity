@@ -5,9 +5,11 @@
             <h1>If you're me, go ahead and prove it: </h1>
             <form action="" method="POST">
                 <input type="password" name="passphrase" id="passphrase">
+                <input type="hidden" name="redirect_url" id="redirect_url" value="{{ redirect_url }}">
             </form>
         {% else %}
             <h1>Says here you're me. Lucky you!</h1>
+            <a href="/logout">I don't want to be Elfstar any more. I want to be Debbie!</a>
         {% endif %}
     </div>
 {%endblock content%}
