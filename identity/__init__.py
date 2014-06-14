@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import os
 import logging
 import bcrypt
+import yaml
 from logging.handlers import SMTPHandler
 from flask import (
     Flask,
@@ -19,6 +20,10 @@ from openid.server import server
 from openid.store.filestore import FileOpenIDStore
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+with open(os.path.join(PROJECT_ROOT, 'config.yml'), 'r') as fh:
+    config = yaml.load(fh.read())
+
 app = Flask(__name__, static_folder=os.path.join(PROJECT_ROOT, 'static'),
             static_url_path='/static')
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -32,12 +37,13 @@ else:
 
 oidserver = server.Server(store, base_url + 'openidserver')
 
-if 'SENDGRID_PASSWORD' in os.environ and not app.debug:
+if 'EMAIL_PASSWORD' in os.environ and not app.debug:
     mail_handler = SMTPHandler('smtp.sendgrid.net',
-                               'identity-errors@andrewlorente.com',
-                               ['identity-errors@andrewlorente.com'],
+                               config['error_email'],
+                               [config['error_email']],
                                'Identity error',
-                               (os.environ['SENDGRID_USERNAME'], os.environ['SENDGRID_PASSWORD']))
+                               (os.environ['EMAIL_USERNAME'],
+                                os.environ['EMAIL_PASSWORD']))
     mail_handler.setLevel(logging.ERROR)
     mail_handler.setFormatter(logging.Formatter('''
 Message type:       %(levelname)s
@@ -57,6 +63,13 @@ def before_request():
     g.user = getattr(g, 'user', session.get('user', None))
     session['approved'] = session.get('approved', {})
 
+@app.context_processor
+def user_info():
+    return {
+        'name': config['name'],
+        'compliment': config['preferred_compliment'],
+    }
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html.jinja',
@@ -66,10 +79,10 @@ def index():
 
 @app.route('/', methods=['POST'])
 def login():
-    my_hashed_password = b"$2a$10$XcUFtgOUkAAZdNH7tkcMqOwE6Mrn00dcVHcqVxUCEHgO683ygxEsC"
     passphrase = request.form['passphrase'].encode('utf-8')
-    if bcrypt.hashpw(passphrase, my_hashed_password) == my_hashed_password:
-        session['user'] = 'Andrew'
+    if bcrypt.hashpw(passphrase, config['password_digest']) \
+            == config['password_digest']:
+        session['user'] = config['name']
 
     redirect_url = request.form.get('redirect_url', '/')
     return redirect(redirect_url)
@@ -145,6 +158,7 @@ def allow():
 def id():
     approved_trust_roots = session['approved'].keys()
     return render_template('id.html.jinja',
+                           user=g.user,
                            approved_trust_roots=approved_trust_roots,
                            base_url=base_url,
                            )
