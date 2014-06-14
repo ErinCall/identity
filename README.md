@@ -12,14 +12,16 @@ If you want to receive emails about unexpected errors, define an `error_emails` 
 
 ## Running the server
 
-You can launch the server directly or by using [Gunicorn](http://gunicorn.org/):
-
-```
-python identity/app.py
-```
+In production, it's best to launch the server using [Gunicorn](http://gunicorn.org/):
 
 ```
 gunicorn identity.app:app -b 0.0.0.0:$PORT -w 3
+```
+
+In production, it's probably more convenient to leave gunicorn out and invoke app.py directly:
+
+```
+python identity/app.py
 ```
 
 Either way, the server relies on several environment variables:
