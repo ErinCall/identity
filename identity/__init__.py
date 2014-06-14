@@ -37,13 +37,18 @@ else:
 
 oidserver = server.Server(store, base_url + 'openidserver')
 
-if 'EMAIL_PASSWORD' in os.environ and not app.debug:
-    mail_handler = SMTPHandler('smtp.sendgrid.net',
-                               config['error_email'],
-                               [config['error_email']],
+if 'error_emails' in config and not app.debug:
+    email_config = config['error_emails']
+    if 'EMAIL_PASSWORD' in os.environ:
+        credentials = (os.environ['EMAIL_USERNAME'],
+                       os.environ['EMAIL_PASSWORD'])
+    else:
+        credentials = None
+    mail_handler = SMTPHandler(email_config['host'],
+                               email_config['sender'],
+                               email_config['recipients'],
                                'Identity error',
-                               (os.environ['EMAIL_USERNAME'],
-                                os.environ['EMAIL_PASSWORD']))
+                               credentials)
     mail_handler.setLevel(logging.ERROR)
     mail_handler.setFormatter(logging.Formatter('''
 Message type:       %(levelname)s
