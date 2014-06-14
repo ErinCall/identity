@@ -149,7 +149,7 @@ def allow():
     elif 'no' in request.form:
         response = openid_request.answer(False)
     else:
-        raise BadRequestKeyError('strange allow post. ')
+        raise BadRequestKeyError('strange allow post.')
 
     return render_response(response)
 
