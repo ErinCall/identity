@@ -1,12 +1,18 @@
 {% extends 'layout.html.jinja' %}
 {%block content%}
-    <div>
-        <p>Do you want to allow this site?</p>
-        <form action="/allow" method="POST">
-            <p>Trust Root: {{trust_root}}</p>
-            <input type="checkbox" id="remember" name="remember" value="yes">
-            <label for="remember">Remember this site</label>
+    <form action="/allow" method="POST">
+        <div class="twelve columns">
+            <h1>Do you want to allow this site?</h1>
+            <p>{{trust_root}}</p>
+            <label for="remember">
+                Remember this site
+                <input type="checkbox" id="remember" name="remember" value="yes">
+            </label>
+        </div>
+        <div class="six columns">
             <input type="submit" name="yes" value="yes">
+        </div>
+        <div class="six columns">
             <input type="submit" name="no" value="no">
         </form>
     </div>
