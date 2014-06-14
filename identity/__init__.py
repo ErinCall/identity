@@ -61,7 +61,7 @@ def before_request():
 def index():
     return render_template('index.html.jinja',
                            user=g.user,
-                           redirect_url=request.args.get('redirect_url')
+                           redirect_url=request.args.get('redirect_url', '')
                            )
 
 @app.route('/', methods=['POST'])
@@ -70,8 +70,8 @@ def login():
     passphrase = request.form['passphrase'].encode('utf-8')
     if bcrypt.hashpw(passphrase, my_hashed_password) == my_hashed_password:
         session['user'] = 'Andrew'
-    redirect_url = request.form.get('redirect_url', '/')
 
+    redirect_url = request.form.get('redirect_url', '/')
     return redirect(redirect_url)
 
 @app.route('/logout', methods=['GET'])
