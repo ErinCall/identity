@@ -1,15 +1,30 @@
 {% extends 'layout.html.jinja' %}
 {%block content%}
-    <div>
-        {% if user is none %}
-            <h1>If you're me, go ahead and prove it: </h1>
-            <form action="" method="POST">
-                <input type="password" name="passphrase" id="passphrase">
-                <input type="hidden" name="redirect_url" id="redirect_url" value="{{ redirect_url }}">
-            </form>
-        {% else %}
+    {% if user is none %}
+        <div class="twelve columns">
+            <h1>If you're me, prove it: </h1>
+        </div>
+        <form action="/" method="POST">
+            <input type="hidden" name="redirect_url" id="redirect_url" value="{{ redirect_url }}">
+            <div class="ten columns">
+                <input type="password"
+                       name="passphrase"
+                       id="passphrase"
+                       autofocus="autofocus"
+                       required="required"
+                       placeholder="Hey handsome..."
+                       >
+            </div>
+            <div class="two columns">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    {% else %}
+        <div class="twelve columns">
             <h1>Says here you're me. Lucky you!</h1>
-            <a href="/logout">I don't want to be Elfstar any more. I want to be Debbie!</a>
-        {% endif %}
-    </div>
+            <h4>
+                <a href="/logout">I don't want to be Elfstar any more. I want to be Debbie!</a>
+            </h4>
+        </div>
+    {% endif %}
 {%endblock content%}

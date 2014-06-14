@@ -3,14 +3,22 @@
     <link rel="openid.server" href="{{ base_url }}openidserver">
 {%endblock head%}
 {%block content%}
-    <div>
-        {% if approved_trust_roots %}
-        <p>Approved Trust Roots:</p>
-        <ul>
-            {% for trust_root in approved_trust_roots %}
-                <li>{{ trust_root }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
+    {% if user is none %}
+        <div class="twelve columns">
+            I am Andrew Lorente.
+        </div>
+    {% else %}
+        <div class="twelve columns">
+            {% if approved_trust_roots %}
+                <p>Approved Sites:</p>
+                <ul>
+                    {% for trust_root in approved_trust_roots %}
+                        <li>{{ trust_root }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                You're logged in.
+            {% endif %}
+        </div>
+    {% endif %}
 {%endblock content%}

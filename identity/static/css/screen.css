@@ -1,0 +1,17 @@
+body {
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 2em;
+}
+
+input[type=password], input[type=submit] {
+    border-radius: 6px;
+    font-size: 18px;
+    height: 46px;
+    line-height: 1.33em;
+    width: 100%;
+}
+
+input[type=submit] {
+    margin-top: 0.33em;
+}
