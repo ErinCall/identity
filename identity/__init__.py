@@ -26,7 +26,7 @@ with open(os.path.join(PROJECT_ROOT, 'config.yml'), 'r') as fh:
 
 app = Flask(__name__, static_folder=os.path.join(PROJECT_ROOT, 'static'),
             static_url_path='/static')
-app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = os.environ.get('SESSION_KEY')
 
 store = FileOpenIDStore('sstore')
 if 'SERVER_NAME' in os.environ:
