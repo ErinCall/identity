@@ -126,9 +126,9 @@ def server():
                 openid_request.trust_root in session['approved']:
             is_authorized = True
         if is_authorized:
-            return openid_request.answer(True)
+            return render_response(openid_request.answer(True))
         elif openid_request.immediate:
-            return openid_request.answer(False)
+            return render_response(openid_request.answer(False))
         else:
             session['last_check_id_request'] = query
             return render_template('decide.html.jinja',
