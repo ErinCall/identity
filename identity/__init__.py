@@ -105,7 +105,7 @@ def logout():
         session.pop('user')
     return redirect('/')
 
-@app.route('/openidserver', methods=['GET', 'POST'])
+@app.route('/openidserver', methods=['GET'])
 def server():
     query = request.args.copy()
     query.update(request.form)
@@ -122,9 +122,9 @@ def server():
 
     if openid_request.mode in ['checkid_immediate', 'checkid_setup']:
         is_authorized = False
-        if g.user is not None and \
-                openid_request.trust_root in session['approved']:
+        if openid_request.trust_root in session['approved']:
             is_authorized = True
+
         if is_authorized:
             return render_response(openid_request.answer(True))
         elif openid_request.immediate:
@@ -136,6 +136,12 @@ def server():
     else:
         return render_response(oidserver.handleRequest(openid_request))
 
+@app.route('/openidserver', methods=['POST'])
+def respond():
+    query = request.args.copy()
+    query.update(request.form)
+    openid_request = oidserver.decodeRequest(query)
+    return render_response(oidserver.handleRequest(openid_request))
 
 @app.route('/allow', methods=['POST'])
 def allow():
