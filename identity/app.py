@@ -1,5 +1,3 @@
-from __future__ import unicode_literals, absolute_import
-
 import os
 
 if os.environ.get('ENV') and os.path.exists(os.environ['ENV']):
