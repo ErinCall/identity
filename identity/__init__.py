@@ -146,10 +146,12 @@ def respond():
 @app.route('/allow', methods=['POST'])
 def allow():
     try:
-        last_query = session.get('last_check_id_request')
+        last_query = session['last_check_id_request']
     except KeyError as e:
         raise BadRequestKeyError(e.message)
+
     openid_request = oidserver.decodeRequest(last_query)
+
     if 'yes' in request.form:
         if request.form.get('remember', 'no') == 'yes':
             trust_root = openid_request.trust_root
