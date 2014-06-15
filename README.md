@@ -28,6 +28,6 @@ Either way, the server relies on several environment variables:
 
 * `PORT` - The network port on which the server should listen
 * `SESSION_KEY` - A key to be used for encrypting and decrypting session data. Keep it secret. Keep it safe.
-* `SERVER_NAME` - The protocol and host on which the server is running (e.g. https://identity.yourname.info)
+* `SERVER_NAME` - The protocol and host on which the server is running, with a trailing slash (e.g. https://identity.yourname.info/)
 
 Additionally, if you've configured error emails using an SMTP host that requires authentication, put your credentials in the `EMAIL_USERNAME` and `EMAIL_PASSWORD` environment variables.
