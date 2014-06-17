@@ -92,8 +92,8 @@ def index():
 @app.route('/', methods=['POST'])
 def login():
     passphrase = request.form['passphrase'].encode('utf-8')
-    if bcrypt.hashpw(passphrase, config['password_digest']) \
-            == config['password_digest']:
+    if bcrypt.hashpw(passphrase, config['passphrase_digest']) \
+            == config['passphrase_digest']:
         session['user'] = config['name']
 
     redirect_url = request.form.get('redirect_url', '/')

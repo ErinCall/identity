@@ -6,7 +6,7 @@ This is a simple Flask app that provides an OpenID server for a single user.
 
 You'll want to edit `identity/config.yml` to reflect the information about yourself.
 
-For `password_digest`, you can generate a bcrypted password digest by running `scripts/generate_bcrypt_password.py`.
+For `passphrase_digest`, you can generate a bcrypted passphrase digest by running `scripts/generate_bcrypt_passphrase.py`.
 
 If you want to receive emails about unexpected errors, define an `error_emails` association with an SMTP host, sender address, and list of recipient addresses. If your SMTP host requires authentication, your credentials should be in environment variables, as described below.
 
