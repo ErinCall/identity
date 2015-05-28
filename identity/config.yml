@@ -1,7 +1,7 @@
-name: 'Andrew Lorente'
+name: 'Erin Call'
 passphrase_digest: '$2a$10$XcUFtgOUkAAZdNH7tkcMqOwE6Mrn00dcVHcqVxUCEHgO683ygxEsC'
-preferred_compliment: 'handsome'
+preferred_compliment: 'cutie'
 error_emails:
     host: 'smtp.sendgrid.net'
-    sender: 'identity-errors@andrewlorente.com'
-    recipients: ['identity-errors@andrewlorente.com']
+    sender: 'identity-errors@erincall.com'
+    recipients: ['identity-errors@erincall.com']
